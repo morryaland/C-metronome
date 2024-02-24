@@ -10,8 +10,6 @@
 
 #include "window.h"
 
-static RESOLUTION MAIN_SCREEN;
-
 RESOLUTION init_resolution( uint w, uint h ) {
   RESOLUTION resolution;
   resolution.WIDTH  = w;

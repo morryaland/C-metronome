@@ -26,7 +26,7 @@ typedef struct {
 #define SCREEN_WIDTH  MAIN_SCREEN.WIDTH
 #define SCREEN_HEIGHT MAIN_SCREEN.HEIGHT
 
-extern static RESOLUTION MAIN_SCREEN;
+static RESOLUTION MAIN_SCREEN;
 
 #define X400_200 init_resolution(400, 200)
 #define X600_400 init_resolution(600, 400)
