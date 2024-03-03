@@ -34,4 +34,8 @@ static RESOLUTION MAIN_SCREEN;
 
 RESOLUTION init_resolution( uint, uint );
 
+/* events */
+
+extern int windres;
+
 #endif

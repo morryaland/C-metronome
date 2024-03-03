@@ -16,3 +16,7 @@ RESOLUTION init_resolution( uint w, uint h ) {
   resolution.HEIGHT = h;
   return resolution; 
 }
+
+/* events */
+
+int windres = 0;
