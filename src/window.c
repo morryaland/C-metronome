@@ -14,6 +14,7 @@ RESOLUTION init_resolution( uint w, uint h ) {
   RESOLUTION resolution;
   resolution.WIDTH  = w;
   resolution.HEIGHT = h;
+  windres = 1;
   return resolution; 
 }
 
