@@ -25,7 +25,6 @@ int main () {
     /* events */
     if (IsKeyPressed(KEY_ENTER)) {
       MAIN_SCREEN = X800_600;
-      windres = 1;
     }
     if (windres) {
       SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
