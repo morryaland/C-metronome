@@ -8,16 +8,34 @@
 *                    *
 *********************/
 
-#include "window.h"
+#include <string.h>
+//
+#include "include/window.h"
+
+SCREEN MAIN_SCREEN;
 
 RESOLUTION init_resolution( uint w, uint h ) {
   RESOLUTION resolution;
-  resolution.WIDTH  = w;
-  resolution.HEIGHT = h;
-  windres = 1;
+  resolution.width  = w;
+  resolution.height = h;
   return resolution; 
 }
 
-/* events */
+EXIT_CODE init_screen( SCREEN *screen, RESOLUTION resolution, char *title )
+{
+  screen->resolution = resolution;
+  strcpy(screen->title, title);
+  return SUCCESS;
+}
 
-int windres = 0;
+EXIT_CODE screen_resize( SCREEN *screen, RESOLUTION resolution )
+{
+  screen->resolution = resolution;
+  screen->resize = true;
+  return SUCCESS;
+}
+
+void window_event( SCREEN *screen )
+{
+
+}

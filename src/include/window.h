@@ -11,31 +11,45 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <stdbool.h>
 #include <stdlib.h>
-#include <raylib.h>
+//
+#include "exit_code.h"
 
 #ifndef uint
 #define uint unsigned int
 #endif
 
+#ifndef BYTE
+#define BYTE 0xFF
+#endif
+
 typedef struct {
-  uint WIDTH;
-  uint HEIGHT;
+  uint width;
+  uint height;
 } RESOLUTION;
 
-#define SCREEN_WIDTH  MAIN_SCREEN.WIDTH
-#define SCREEN_HEIGHT MAIN_SCREEN.HEIGHT
+typedef struct {
+  RESOLUTION resolution;
+  char title[BYTE];
+  /* EVENTS */
+  bool resize;
+  bool open;
+} SCREEN;
 
-static RESOLUTION MAIN_SCREEN;
+#define SCREEN_WIDTH  MAIN_SCREEN.resolution.width
+#define SCREEN_HEIGHT MAIN_SCREEN.resolution.height
 
-#define X400_200 init_resolution(400, 200)
-#define X600_400 init_resolution(600, 400)
-#define X800_600 init_resolution(800, 600)
+extern SCREEN MAIN_SCREEN;
+
+#define X800_600 init_resolution( 800, 600 )
+#define X600_400 init_resolution( 600, 400 )
+#define X400_200 init_resolution( 400, 200 )
 
 RESOLUTION init_resolution( uint, uint );
 
-/* events */
+EXIT_CODE init_screen( SCREEN *screen, RESOLUTION resolution, char *title );
 
-extern int windres;
+void window_event( SCREEN *screen );
 
 #endif

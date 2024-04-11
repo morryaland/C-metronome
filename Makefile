@@ -10,16 +10,14 @@ PATH_OBJ=./obj/
 PATH_LIB=./lib/
 PATH_BIN=./bin/
 
-SRC=main.c
-OBJ=main.o
+SRC=main.c window.c
+OBJ=main.o window.o
 
 ifeq ($(OS),LINUX)
-	LIB+=libraylib.so
 	CC:=x86_64-linux-gnu-gcc
 endif
 
 ifeq ($(OS),WIN)
-	LIB+=libraylib.dll
 	CC:=x86_64-w64-mingw32-gcc
 	BUILD_NAME:= $(addsuffix .exe,$(BUILD_NAME))
 endif
@@ -35,12 +33,10 @@ BUILD_NAME:= $(addprefix $(PATH_BIN),$(BUILD_NAME) )
 
 
 $(BUILD_NAME) : $(OBJ)
-	mkdir bin
 	$(CC) -o $(BUILD_NAME) $(OBJ) $(LIB) $(FLAGS)
 	ln -sf $(BUILD_NAME) $(BUILD_NAME_LN)
 
 $(PATH_OBJ)%.o : $(PATH_SRC)%.c
-	mkdir obj
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean :
