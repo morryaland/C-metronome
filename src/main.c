@@ -1,16 +1,18 @@
-/*********************
-*                    *
-* AUTHOR: Muly22     *
-*                    *
-* CREATE: 2024.02.24 *
-*                    *
-* FOR:    Mishander  *
-*                    *
-*********************/
+/**********************************************\
+*                                              *
+* AUTHOR: Muly22                               *
+*                                              *
+* CREATE: 2024.02.24                           *
+*                                              *
+* FOR:    Mishander                            *
+*                                              *
+* ABOUT: cross-platform metronome written in C *
+*                                              *
+\**********************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
-//
+
 #include "include/window.h"
 
 int main () {

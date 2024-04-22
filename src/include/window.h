@@ -1,19 +1,21 @@
-/*********************
-*                    *
-* AUTHOR: Muly22     *
-*                    *
-* CREATE: 2024.02.24 *
-*                    *
-* FOR:    Mishander  *
-*                    *
-*********************/
+/**********************************************\
+*                                              *
+* AUTHOR: Muly22                               *
+*                                              *
+* CREATE: 2024.02.24                           *
+*                                              *
+* FOR:    Mishander                            *
+*                                              *
+* ABOUT: cross-platform metronome written in C *
+*                                              *
+\**********************************************/
 
 #ifndef WINDOW_H
 #define WINDOW_H
 
 #include <stdbool.h>
 #include <stdlib.h>
-//
+
 #include "exit_code.h"
 
 #ifndef uint

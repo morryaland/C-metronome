@@ -23,7 +23,7 @@ ifeq ($(OS),WIN)
 endif
 
 FLAGS+=
-CFLAGS+=-Wall -O$(OP)
+CFLAGS+=-Wall -O$(OP) -Wno-comment
 
 SRC:= $(addprefix $(PATH_SRC),$(SRC) )
 OBJ:= $(addprefix $(PATH_OBJ),$(OBJ) )
