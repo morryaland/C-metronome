@@ -1,28 +1,30 @@
-/**********************************************\
-*                                              *
-* AUTHOR: Muly22                               *
-*                                              *
-* CREATE: 2024.02.24                           *
-*                                              *
-* FOR:    Mishander                            *
-*                                              *
-* ABOUT: cross-platform metronome written in C *
-*                                              *
-\**********************************************/
+/***********************************************\
+*                                               *
+* AUTHOR: Muly                                  *
+*                                               *
+* CREATE: 2024.02.24                            *
+*                                               *
+* FOR:    Mishander                             *
+*                                               *
+* ABOUT:  cross-platform metronome written in C *
+*                                               *
+\***********************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "include/window.h"
 
-int main () {
+int main ()
+{
   /* init window */
-  init_screen(&MAIN_SCREEN, X400_200, "lol");
-  
+  window_init(&MAIN_WINDOW, 400, 200, "lol");
+
   /* window loop */
-  while (MAIN_SCREEN.open) {
-    window_event(&MAIN_SCREEN);
-    
+  for (;;) {
+    window_event(&MAIN_WINDOW);
+    window_update(&MAIN_WINDOW);
+    //code
   }
   return 0;
 }

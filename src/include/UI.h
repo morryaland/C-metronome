@@ -2,7 +2,7 @@
 *                                               *
 * AUTHOR: Muly                                  *
 *                                               *
-* CREATE: 2024.02.24                            *
+* CREATE: 2024.05.06                            *
 *                                               *
 * FOR:    Mishander                             *
 *                                               *
@@ -10,29 +10,21 @@
 *                                               *
 \***********************************************/
 
-#ifndef WINDOW_H
-#define WINDOW_H
-
-#include <stdlib.h>
+#ifndef UI_H
+#define UI_H
 
 #include "../../lib/include/SDL2/SDL.h"
-#include "UI.h"
-
-#define BUTTONLEN 1
 
 typedef struct {
-  SDL_Window *win;
-  SDL_Renderer *ren;
-  SDL_Event eve;
-  BUTTON b[BUTTONLEN];
-} WINDOW;
+} TITLE;
 
-extern WINDOW MAIN_WINDOW;
+typedef struct {
+  TITLE t;
+  uint8_t press;
+  uint8_t over;
+  SDL_Rect rec;
+} BUTTON;
 
-void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title );
-
-void window_update( WINDOW *w );
-
-void window_event( WINDOW *w );
+void button_event( BUTTON *b, SDL_Event *eve );
 
 #endif

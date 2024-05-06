@@ -1,6 +1,6 @@
 /**********************************************\
 *                                              *
-* AUTHOR: Muly22                               *
+* AUTHOR: Muly                                 *
 *                                              *
 * CREATE: 2024.02.24                           *
 *                                              *
@@ -10,35 +10,41 @@
 *                                              *
 \**********************************************/
 
-#include <string.h>
-
 #include "include/window.h"
 
-SCREEN MAIN_SCREEN;
+WINDOW MAIN_WINDOW;
 
-RESOLUTION init_resolution( uint w, uint h ) {
-  RESOLUTION resolution;
-  resolution.width  = w;
-  resolution.height = h;
-  return resolution; 
+void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title )
+{
+  SDL_Init(SDL_INIT_VIDEO);
+  win->win = SDL_CreateWindow(title, 0, 0, w, h, 0);
+  win->ren = SDL_CreateRenderer(win->win, -1, SDL_RENDERER_ACCELERATED);
+  /* button event */
 }
 
-EXIT_CODE init_screen( SCREEN *screen, RESOLUTION resolution, char *title )
+void window_update( WINDOW *w )
 {
-  screen->resolution = resolution;
-  strcpy(screen->title, title);
-  /* code */
-  return SUCCESS;
+  SDL_SetRenderDrawColor(w->ren, 96, 128, 255, 255);
+  SDL_RenderClear(w->ren);
+  SDL_RenderPresent(w->ren);
 }
 
-EXIT_CODE screen_resize( SCREEN *screen, RESOLUTION resolution )
+void window_event( WINDOW *w )
 {
-  screen->resolution = resolution;
-  screen->resize = true;
-  return SUCCESS;
-}
-
-void window_event( SCREEN *screen )
-{
-  /* code */
+  while (SDL_PollEvent(&(w->eve)))
+  {
+    switch (w->eve.type)
+    {
+      case SDL_QUIT:
+        exit(0);
+        break;
+      case SDL_MOUSEMOTION:
+        for (int i = 0; i < BUTTONLEN; i++) {
+          button_event(&(w->b[i]), &(w->eve));
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }

@@ -2,7 +2,7 @@ BUILD_NAME=metronome
 
 OS=LINUX
 
-CC=
+CC=gcc
 OP=3
 
 PATH_SRC=./src/
@@ -12,18 +12,14 @@ PATH_BIN=./bin/
 
 SRC=main.c window.c
 OBJ=main.o window.o
-
-ifeq ($(OS),LINUX)
-	CC:=x86_64-linux-gnu-gcc
-endif
+LIB=libSDL2.so
 
 ifeq ($(OS),WIN)
-	CC:=x86_64-w64-mingw32-gcc
 	BUILD_NAME:= $(addsuffix .exe,$(BUILD_NAME))
 endif
 
 FLAGS+=
-CFLAGS+=-Wall -O$(OP) -Wno-comment
+CFLAGS+=-Wall -O$(OP) -Wcomment
 
 SRC:= $(addprefix $(PATH_SRC),$(SRC) )
 OBJ:= $(addprefix $(PATH_OBJ),$(OBJ) )
@@ -41,4 +37,3 @@ $(PATH_OBJ)%.o : $(PATH_SRC)%.c
 
 clean :
 	rm $(BUILD_NAME) $(PATH_OBJ)*.o $(BUILD_NAME_LN)
-
