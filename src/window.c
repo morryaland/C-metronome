@@ -1,14 +1,14 @@
-/**********************************************\
-*                                              *
-* AUTHOR: Muly                                 *
-*                                              *
-* CREATE: 2024.02.24                           *
-*                                              *
-* FOR:    Mishander                            *
-*                                              *
-* ABOUT: cross-platform metronome written in C *
-*                                              *
-\**********************************************/
+/************************************************\
+*                                                *
+* AUTHOR:  Muly                                  *
+*                                                *
+* CREATED: 2024.02.24                            *
+*                                                *
+* FOR:     Mishander                             *
+*                                                *
+* ABOUT:   cross-platform metronome written in C *
+*                                                *
+\************************************************/
 
 #include "include/window.h"
 
@@ -19,7 +19,6 @@ void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title )
   SDL_Init(SDL_INIT_VIDEO);
   win->win = SDL_CreateWindow(title, 0, 0, w, h, 0);
   win->ren = SDL_CreateRenderer(win->win, -1, SDL_RENDERER_ACCELERATED);
-  /* button event */
 }
 
 void window_update( WINDOW *w )

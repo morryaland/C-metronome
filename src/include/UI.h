@@ -1,14 +1,14 @@
-/***********************************************\
-*                                               *
-* AUTHOR: Muly                                  *
-*                                               *
-* CREATE: 2024.05.06                            *
-*                                               *
-* FOR:    Mishander                             *
-*                                               *
-* ABOUT:  cross-platform metronome written in C *
-*                                               *
-\***********************************************/
+/************************************************\
+*                                                *
+* AUTHOR:  Muly                                  *
+*                                                *
+* CREATED: 2024.05.06                            *
+*                                                *
+* FOR:     Mishander                             *
+*                                                *
+* ABOUT:   cross-platform metronome written in C *
+*                                                *
+\************************************************/
 
 #ifndef UI_H
 #define UI_H

@@ -1,14 +1,14 @@
-/***********************************************\
-*                                               *
-* AUTHOR: Muly                                  *
-*                                               *
-* CREATE: 2024.02.24                            *
-*                                               *
-* FOR:    Mishander                             *
-*                                               *
-* ABOUT:  cross-platform metronome written in C *
-*                                               *
-\***********************************************/
+/************************************************\
+*                                                *
+* AUTHOR:  Muly                                  *
+*                                                *
+* CREATED: 2024.02.24                            *
+*                                                *
+* FOR:     Mishander                             *
+*                                                *
+* ABOUT:   cross-platform metronome written in C *
+*                                                *
+\************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
