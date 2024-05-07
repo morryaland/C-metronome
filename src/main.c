@@ -19,7 +19,9 @@ int main ()
 {
   /* init window */
   window_init(&MAIN_WINDOW, 400, 200, "lol");
-
+  SDL_Color clr = {255, 255, 255, 255};
+  TITLE t = {};
+  button_init(MAIN_WINDOW.b, t, 50, 50, 50, 50, clr, NULL );
   /* window loop */
   for (;;) {
     window_event(&MAIN_WINDOW);

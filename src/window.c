@@ -23,8 +23,17 @@ void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title )
 
 void window_update( WINDOW *w )
 {
-  SDL_SetRenderDrawColor(w->ren, 96, 128, 255, 255);
+  SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 255);
   SDL_RenderClear(w->ren);
+  for (int i = 0; i < BUTTONLEN; i++) {
+    if (w->b[i].over) {
+    SDL_SetRenderDrawColor(w->ren, 20, 20, 20, 255);
+    SDL_RenderFillRect(w->ren, &(w->b[i].rec));
+    }
+    SDL_SetRenderDrawColor(w->ren, w->b[i].clr.r, w->b[i].clr.g,
+                           w->b[i].clr.b, w->b[i].clr.a);
+    SDL_RenderDrawRect(w->ren, &(w->b[i].rec));
+  }
   SDL_RenderPresent(w->ren);
 }
 
@@ -37,13 +46,13 @@ void window_event( WINDOW *w )
       case SDL_QUIT:
         exit(0);
         break;
-      case SDL_MOUSEMOTION:
-        for (int i = 0; i < BUTTONLEN; i++) {
-          button_event(&(w->b[i]), &(w->eve));
-        }
-        break;
       default:
         break;
+    }
+    if ( w->eve.type == SDL_MOUSEMOTION || w->eve.type == SDL_MOUSEBUTTONDOWN) {
+      for (int i = 0; i < BUTTONLEN; i++) {
+        button_event(&(w->b[i]), &(w->eve));
+      }
     }
   }
 }
