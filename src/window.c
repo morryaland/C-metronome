@@ -12,29 +12,43 @@
 
 #include "include/window.h"
 
-WINDOW MAIN_WINDOW;
+#define LOGING
 
-void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title )
+_APP APP;
+WINDOW *active_window;
+
+void window_init( WINDOW **win, char *title, size_t blen )
 {
   SDL_Init(SDL_INIT_VIDEO);
-  win->win = SDL_CreateWindow(title, 0, 0, w, h, 0);
-  win->ren = SDL_CreateRenderer(win->win, -1, SDL_RENDERER_ACCELERATED);
+  SDL_SetWindowTitle(APP.win, title);
+  if (*win != NULL)
+    return;
+  *win = malloc(sizeof(WINDOW));
+  (**win).blen = blen;
+  (**win).b = malloc(blen * sizeof(BUTTON));
+}
+
+void button_draw( WINDOW *w, BUTTON *b )
+{
+  if (b->over) {
+    SDL_SetRenderDrawColor(APP.ren, 20, 20, 20, 255);
+    SDL_RenderFillRect(APP.ren, &(b->rec));
+  }
+  SDL_SetRenderDrawColor(APP.ren, 255, 255, 255, 255);
+  SDL_RenderDrawRect(APP.ren, &(b->rec));
+  SDL_SetRenderDrawColor(APP.ren, 100, 255, 100, 255);
+  SDL_Rect smallrec = {b->rec.x+2,b->rec.y+2,b->rec.w-4,b->rec.h-4};
+  SDL_RenderDrawRect(APP.ren, &smallrec);
 }
 
 void window_update( WINDOW *w )
 {
-  SDL_SetRenderDrawColor(w->ren, 0, 0, 0, 255);
-  SDL_RenderClear(w->ren);
-  for (int i = 0; i < BUTTONLEN; i++) {
-    if (w->b[i].over) {
-    SDL_SetRenderDrawColor(w->ren, 20, 20, 20, 255);
-    SDL_RenderFillRect(w->ren, &(w->b[i].rec));
-    }
-    SDL_SetRenderDrawColor(w->ren, w->b[i].clr.r, w->b[i].clr.g,
-                           w->b[i].clr.b, w->b[i].clr.a);
-    SDL_RenderDrawRect(w->ren, &(w->b[i].rec));
+  SDL_SetRenderDrawColor(APP.ren, 0, 0, 0, 255);
+  SDL_RenderClear(APP.ren);
+  for (int i = 0; i < w->blen; i++) {
+    button_draw(w, (w->b + i));
   }
-  SDL_RenderPresent(w->ren);
+  SDL_RenderPresent(APP.ren);
 }
 
 void window_event( WINDOW *w )
@@ -50,8 +64,8 @@ void window_event( WINDOW *w )
         break;
     }
     if ( w->eve.type == SDL_MOUSEMOTION || w->eve.type == SDL_MOUSEBUTTONDOWN) {
-      for (int i = 0; i < BUTTONLEN; i++) {
-        button_event(&(w->b[i]), &(w->eve));
+      for (int i = 0; i < w->blen; i++) {
+        button_event(w->b + i, &(w->eve));
       }
     }
   }

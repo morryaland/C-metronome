@@ -15,21 +15,29 @@
 
 #include <stdlib.h>
 
-#include "../../lib/include/SDL2/SDL.h"
 #include "UI.h"
+#include "../../lib/include/SDL2/SDL.h"
 
-#define BUTTONLEN 1
+
+typedef struct {
+  SDL_Event eve;
+  size_t blen;
+  BUTTON *b;
+} WINDOW;
 
 typedef struct {
   SDL_Window *win;
   SDL_Renderer *ren;
-  SDL_Event eve;
-  BUTTON b[BUTTONLEN];
-} WINDOW;
+  WINDOW *main;
+  WINDOW *settings;
+} _APP;
 
-extern WINDOW MAIN_WINDOW;
+extern _APP APP;
+extern WINDOW *active_window;
 
-void window_init( WINDOW *win, uint32_t w, uint32_t h, char *title );
+void window_init( WINDOW **win, char *title, size_t blen );
+
+void button_draw( WINDOW *w, BUTTON *b );
 
 void window_update( WINDOW *w );
 
