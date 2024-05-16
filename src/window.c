@@ -39,6 +39,14 @@ void button_draw( WINDOW *w, BUTTON *b )
   SDL_SetRenderDrawColor(APP.ren, 100, 255, 100, 255);
   SDL_Rect smallrec = {b->rec.x+2,b->rec.y+2,b->rec.w-4,b->rec.h-4};
   SDL_RenderDrawRect(APP.ren, &smallrec);
+
+  TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24);
+  SDL_Color White = {255, 255, 255};
+  SDL_Surface *surfaceMessage = 
+              TTF_RenderText_Solid(Sans, b->t.text, White);
+  SDL_Texture *texture = 
+              SDL_CreateTextureFromSurface(APP.ren, surfaceMessage);
+  SDL_RenderCopy(APP.ren, texture, NULL, &smallrec);
 }
 
 void window_update( WINDOW *w )
