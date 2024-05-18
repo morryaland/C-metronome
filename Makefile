@@ -12,13 +12,12 @@ PATH_BIN=./bin/
 
 SRC=main.c window.c UI.c
 OBJ=main.o window.o UI.o
-LIB=libSDL2.so
 
 ifeq ($(OS),WIN)
 	BUILD_NAME:= $(addsuffix .exe,$(BUILD_NAME))
 endif
 
-FLAGS+=
+FLAGS+=-lSDL2
 CFLAGS+=-Wall -O$(OP) -Wcomment
 
 SRC:= $(addprefix $(PATH_SRC),$(SRC) )

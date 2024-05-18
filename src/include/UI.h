@@ -16,6 +16,7 @@
 #include "../../lib/include/SDL2/SDL.h"
 
 typedef struct {
+  char title[255];
 } TITLE;
 
 typedef struct {

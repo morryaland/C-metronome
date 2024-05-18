@@ -20,17 +20,21 @@ void w_main(), setting();
 void w_main()
 {
   active_window = APP.main;
-  window_init(&active_window, "metronome", 1);
-  TITLE t = {};
-  button_init(active_window->b, t, 50, 50, 50, 50, setting );
+  if (!active_window) {
+    window_init(&active_window, "metronome", 1);
+    TITLE t = {};
+    button_init(active_window->b, t, 50, 50, 50, 50, setting );
+  }
 }
 
 void setting()
 {
   active_window = APP.settings;
-  window_init(&active_window, "settings", 1);
-  TITLE t = {};
-  button_init(active_window->b, t, 50, 50, 100, 50, w_main );
+  if (!active_window) {
+    window_init(&active_window, "settings", 1);
+    TITLE back = {"back", NULL};
+    button_init(active_window->b, back, 50, 50, 100, 50, w_main );
+  }
 }
 
 int main()
@@ -43,6 +47,7 @@ int main()
   for (;;) {
     window_update(active_window);
     window_event(active_window);
+    SDL_Delay(41);
     //code
   }
   return 0;
