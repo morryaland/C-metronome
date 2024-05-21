@@ -11,24 +11,21 @@
 \************************************************/
 
 #include "include/window.h"
-
-#define LOGING
+#include "include/log.h"
 
 _APP APP;
 WINDOW *active_window;
 
-void window_init( WINDOW **win, char *title, size_t blen )
+void window_init( WINDOW **w, char *title )
 {
-  SDL_Init(SDL_INIT_VIDEO);
   SDL_SetWindowTitle(APP.win, title);
-  if (*win != NULL)
+  if (*w != NULL)
     return;
-  *win = malloc(sizeof(WINDOW));
-  (**win).blen = blen;
-  (**win).b = malloc(blen * sizeof(BUTTON));
+  *w = malloc(sizeof(WINDOW));
+  (**w).blen = 0;
 }
 
-void button_draw( WINDOW *w, BUTTON *b )
+int button_draw( WINDOW *w, BUTTON *b )
 {
   if (b->over) {
     SDL_SetRenderDrawColor(APP.ren, 20, 20, 20, 255);
@@ -39,7 +36,7 @@ void button_draw( WINDOW *w, BUTTON *b )
   SDL_SetRenderDrawColor(APP.ren, 100, 255, 100, 255);
   SDL_Rect smallrec = {b->rec.x+2,b->rec.y+2,b->rec.w-4,b->rec.h-4};
   SDL_RenderDrawRect(APP.ren, &smallrec);
-
+  /*
   TTF_Font* Sans = TTF_OpenFont("Sans.ttf", 24);
   SDL_Color White = {255, 255, 255};
   SDL_Surface *surfaceMessage = 
@@ -47,19 +44,25 @@ void button_draw( WINDOW *w, BUTTON *b )
   SDL_Texture *texture = 
               SDL_CreateTextureFromSurface(APP.ren, surfaceMessage);
   SDL_RenderCopy(APP.ren, texture, NULL, &smallrec);
+  */
+  return 0;
 }
 
-void window_update( WINDOW *w )
+int window_update( WINDOW *w )
 {
   SDL_SetRenderDrawColor(APP.ren, 0, 0, 0, 255);
   SDL_RenderClear(APP.ren);
   for (int i = 0; i < w->blen; i++) {
-    button_draw(w, (w->b + i));
+    if (button_draw(w, (w->b + i)) < 0) {
+      error(DEFAULT_LOG_FILE, "button_draw\n");
+      return -1;
+    }
   }
   SDL_RenderPresent(APP.ren);
+  return 0;
 }
 
-void window_event( WINDOW *w )
+int window_event( WINDOW *w )
 {
   while (SDL_PollEvent(&(w->eve)))
   {
@@ -72,9 +75,11 @@ void window_event( WINDOW *w )
         break;
     }
     if ( w->eve.type == SDL_MOUSEMOTION || w->eve.type == SDL_MOUSEBUTTONDOWN) {
-      for (int i = 0; i < w->blen; i++) {
-        button_event(w->b + i, &(w->eve));
+      if (button_event(w) < 0) {
+        error(DEFAULT_LOG_FILE, "button_event\n");
+        return -1;
       }
     }
   }
+  return 0;
 }

@@ -10,8 +10,8 @@ PATH_OBJ=./obj/
 PATH_LIB=./lib/
 PATH_BIN=./bin/
 
-SRC=main.c window.c UI.c
-OBJ=main.o window.o UI.o
+SRC=main.c window.c UI.c log.c
+OBJ=main.o window.o UI.o log.o
 
 ifeq ($(OS),WIN)
 	BUILD_NAME:= $(addsuffix .exe,$(BUILD_NAME))

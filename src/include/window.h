@@ -35,12 +35,18 @@ typedef struct {
 extern _APP APP;
 extern WINDOW *active_window;
 
-void window_init( WINDOW **win, char *title, size_t blen );
+void window_init( WINDOW **w, char *title);
 
-void button_draw( WINDOW *w, BUTTON *b );
+int button_draw( WINDOW *w, BUTTON *b );
 
-void window_update( WINDOW *w );
+int button_add( WINDOW *_w, TITLE t, uint16_t x,
+                uint16_t y, uint16_t w, uint16_t h,
+                int (*act)(void) );
 
-void window_event( WINDOW *w );
+int button_event( WINDOW *w );
+
+int window_update( WINDOW *w );
+
+int window_event( WINDOW *w );
 
 #endif

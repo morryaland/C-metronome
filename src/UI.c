@@ -10,28 +10,39 @@
 *                                                *
 \************************************************/
 
-#include "include/UI.h"
+#include "include/window.h"
+#include "include/log.h"
 
-void button_init( BUTTON *b, TITLE t, uint16_t x,
-                  uint16_t y, uint16_t w, uint16_t h,
-                  void (*act)(void) )
+int button_add( WINDOW *_w, TITLE t, uint16_t x,
+                uint16_t y, uint16_t w, uint16_t h,
+                int (*act)(void) )
 {
-  b->t = t;
-  b->act = act;
-  b->rec.x = x; b->rec.y = y; b->rec.w = w; b->rec.h = h;
+  _w->b = realloc(_w->b, (_w->blen + 1) * sizeof(BUTTON));
+  if (!_w->b) {
+    error(DEFAULT_LOG_FILE, "window realloc == NULL\n");
+    return -1;
+  }
+  int blen = (_w->blen)++;
+  _w->b[blen].t = t;
+  _w->b[blen].act = act;
+  _w->b[blen].rec.x = x; _w->b[blen].rec.y = y; _w->b[blen].rec.w = w; _w->b[blen].rec.h = h;
+  return 0;
 }
 
-void button_event( BUTTON *b, SDL_Event *eve )
+int button_event( WINDOW *w )
 {
-  if (eve->motion.x >= b->rec.x && eve->motion.x <= b->rec.w + b->rec.x &&
-      eve->motion.y >= b->rec.y && eve->motion.y <= b->rec.h + b->rec.y) {
-    if (!(b->over))
-      b->over = 1;
-    if (eve->button.button == SDL_BUTTON_LEFT)
-      b->act();
+  for (int i = 0; i < w->blen; i++) {
+    if (w->eve.motion.x >= w->b[i].rec.x && w->eve.motion.x <= w->b[i].rec.w + w->b[i].rec.x &&
+        w->eve.motion.y >= w->b[i].rec.y && w->eve.motion.y <= w->b[i].rec.h + w->b[i].rec.y) {
+      if (!(w->b[i].over))
+        w->b[i].over = 1;
+      if (w->eve.button.button == SDL_BUTTON_LEFT)
+        w->b[i].act();
+    }
+    else {
+      if (w->b[i].over)
+        w->b[i].over = 0;
+    }
   }
-  else {
-    if (b->over)
-      b->over = 0;
-  }
+  return 0;
 }

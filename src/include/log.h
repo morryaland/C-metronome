@@ -2,7 +2,7 @@
 *                                                *
 * AUTHOR:  Muly                                  *
 *                                                *
-* CREATED: 2024.05.06                            *
+* CREATED: 2024.05.20                            *
 *                                                *
 * FOR:     Mishander                             *
 *                                                *
@@ -10,20 +10,18 @@
 *                                                *
 \************************************************/
 
-#ifndef UI_H
-#define UI_H
+#ifndef LOG_H
+#define LOG_H
 
-#include "../../lib/include/SDL2/SDL.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
 
-typedef struct {
-  char title[255];
-} TITLE;
+#define DEFAULT_LOG_FILE "./log.txt"
 
-typedef struct {
-  TITLE t;
-  uint8_t over;
-  int (*act)( void );
-  SDL_Rect rec;
-} BUTTON;
+void error(const char *pach, char *format, ...);
+
+void logg( const char *pach, const char *format, ... );
 
 #endif
