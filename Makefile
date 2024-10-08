@@ -26,4 +26,3 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 clean:
 	rm $(BIN_PATH)$(TARGET)
->>>>>>> cda9330 (new start)
