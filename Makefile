@@ -1,38 +1,29 @@
-BUILD_NAME=metronome
-
-OS=LINUX
-
+TARGET=metronome
 CC=gcc
-OP=3
+MKDIR=mkdir -p
 
-PATH_SRC=./src/
-PATH_OBJ=./obj/
-PATH_LIB=./lib/
-PATH_BIN=./bin/
+BIN_PATH = ./bin/
+SRC_PATH = ./src/
+OBJ_PATH = ./obj/
 
-SRC=main.c window.c UI.c log.c
-OBJ=main.o window.o UI.o log.o
+SRC = $(shell find $(SRC_PATH) -type f -name '*.c')
+OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o,$(SRC))
 
-ifeq ($(OS),WIN)
-	BUILD_NAME:= $(addsuffix .exe,$(BUILD_NAME))
-endif
+CFLAGS+= -g -O2 $(shell pkg-config --cflags gtk4)
+LDFLAGS+= $(shell pkg-config --libs gtk4)
 
-FLAGS+=-lSDL2
-CFLAGS+=-Wall -O$(OP) -Wcomment
+.PHONY: all clean
 
-SRC:= $(addprefix $(PATH_SRC),$(SRC) )
-OBJ:= $(addprefix $(PATH_OBJ),$(OBJ) )
-LIB:= $(addprefix $(PATH_LIB),$(LIB) )
-BUILD_NAME_LN:=$(BUILD_NAME)
-BUILD_NAME:= $(addprefix $(PATH_BIN),$(BUILD_NAME) )
+all: $(BIN_PATH)$(TARGET)
 
+$(BIN_PATH)$(TARGET): $(OBJ)
+	$(MKDIR) $(@D)
+	$(CC) -o $@ $(LDFLAGS) $(CFLAGS) $^
 
-$(BUILD_NAME) : $(OBJ)
-	$(CC) -o $(BUILD_NAME) $(OBJ) $(LIB) $(FLAGS)
-	ln -sf $(BUILD_NAME) $(BUILD_NAME_LN)
-
-$(PATH_OBJ)%.o : $(PATH_SRC)%.c
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	$(MKDIR) $(@D)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-clean :
-	rm $(BUILD_NAME) $(PATH_OBJ)*.o $(BUILD_NAME_LN)
+clean:
+	rm $(BIN_PATH)$(TARGET)
+>>>>>>> cda9330 (new start)
